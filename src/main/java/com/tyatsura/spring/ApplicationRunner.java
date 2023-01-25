@@ -17,5 +17,8 @@ public class ApplicationRunner {
         //may be used just getBean(String name) but will be returned Object
         System.out.println(applicationContext.getBean("pool1", ConnectionPool.class));
 
+        var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
+        System.out.println(companyRepository);
+
     }
 }
