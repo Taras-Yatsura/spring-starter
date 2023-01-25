@@ -15,17 +15,26 @@
             <list>
                 <value>--arg1=value1</value>
                 <value>--arg2=value2</value>
+                <!--Factory method-->
+                <ref bean="driver"/>
             </list>
         </constructor-arg>
         <constructor-arg index="3" type="java.util.Map">
             <map>
                 <entry key="url" value="postgresUrl"/>
                 <entry key="pass" value="1234"/>
+                <!--Using references to another bean-->
+                <entry key="driver" value-ref="driver"/>
             </map>
         </constructor-arg>
-        <constructor-arg name="username" value="postgers" type="java.lang.String"/>
+        <!--Using references to another bean-->
+        <constructor-arg name="username" ref="driver" type="java.lang.String"/>
         <constructor-arg name="poolSize" value="10" type="java.lang.Integer"/>
     </bean>
     <!--<bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool"/>-->
 
+    <!--Using references to another bean-->
+    <bean id="companyRepository" class="com.tyatsura.spring.database.repository.CompanyRepository">
+        <constructor-arg ref="pool1"/>
+    </bean>
 </beans>
