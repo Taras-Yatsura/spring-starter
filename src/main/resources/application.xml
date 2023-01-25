@@ -37,4 +37,13 @@
     <bean id="companyRepository" class="com.tyatsura.spring.database.repository.CompanyRepository" factory-method="of">
         <constructor-arg ref="pool1"/>
     </bean>
+
+    <!--Using property injection (by setter)-->
+    <bean id="userRepository" class="com.tyatsura.spring.database.repository.UserRepository">
+        <constructor-arg name="connectionPool">
+            <!--Not good practice to use null. Only for test purposes because we haven't no arg constructor-->
+            <null/>
+        </constructor-arg>
+        <property name="connectionPool" ref="pool1"/>
+    </bean>
 </beans>

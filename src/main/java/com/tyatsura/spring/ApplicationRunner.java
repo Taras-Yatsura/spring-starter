@@ -20,5 +20,8 @@ public class ApplicationRunner {
         var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
         System.out.println(companyRepository);
 
+        var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
+        System.out.println(userRepository);
+
     }
 }
