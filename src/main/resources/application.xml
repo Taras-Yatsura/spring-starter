@@ -3,7 +3,29 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="pool1" name="p1,p2,p3" class="com.tyatsura.spring.database.pool.ConnectionPool"/>
-    <bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool"/>
+    <!--Used for setting some constructor tht consume specific argument type (as String have StringBuffer, StringBuilder...)-->
+    <bean id="driver" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="PostgresDriver"/>
+    </bean>
+
+    <!--id index needed to specify which argument of constructor is specified (order should be same). If not specified - one by one-->
+    <!--More clear -  use name of arg instead (see username and poolSize) -->
+    <bean id="pool1" name="p1,p2,p3" class="com.tyatsura.spring.database.pool.ConnectionPool">
+        <constructor-arg index="2" type="java.util.List">
+            <list>
+                <value>--arg1=value1</value>
+                <value>--arg2=value2</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="3" type="java.util.Map">
+            <map>
+                <entry key="url" value="postgresUrl"/>
+                <entry key="pass" value="1234"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="username" value="postgers" type="java.lang.String"/>
+        <constructor-arg name="poolSize" value="10" type="java.lang.Integer"/>
+    </bean>
+    <!--<bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool"/>-->
 
 </beans>
