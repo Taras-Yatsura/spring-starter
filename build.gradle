@@ -9,9 +9,18 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    springVersion = '6.0.3'
+    junitVersion = '5.9.2'
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    //implementation 'springcore'
+    implementation "org.springframework:spring-core:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 test {

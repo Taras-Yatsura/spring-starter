@@ -5,20 +5,17 @@ import com.tyatsura.spring.database.repository.CompanyRepository;
 import com.tyatsura.spring.database.repository.UserRepository;
 import com.tyatsura.spring.ioc.Container;
 import com.tyatsura.spring.service.UserService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        Container container = new Container();
-        /*ConnectionPool connectionPool = container.get(ConnectionPool.class);
-        UserRepository userRepository = container.get(UserRepository.class);
-        CompanyRepository companyRepository = container.get(CompanyRepository.class);*/
-        UserService userService = container.get(UserService.class);
+        var applicationContext = new ClassPathXmlApplicationContext("application.xml");
+        //get by type -> Map<String, Object>
+        //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
+        //System.out.println(applicationContext.getBean(ConnectionPool.class));
 
+        //may be used just getBean(String name) but will be returned Object
+        System.out.println(applicationContext.getBean("pool1", ConnectionPool.class));
 
-        /*ConnectionPool connectionPool = new ConnectionPool();
-        UserRepository userRepository = new UserRepository(connectionPool);
-        CompanyRepository companyRepository = new CompanyRepository(connectionPool);
-        UserService userService = new UserService(userRepository, companyRepository);*/
-        //TODO userService
     }
 }
