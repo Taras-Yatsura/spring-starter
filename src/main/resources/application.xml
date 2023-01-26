@@ -16,6 +16,10 @@
         <property name="locations" value="classpath:application.properties"/>
     </bean>-->
 
+    <bean class="com.tyatsura.spring.bfpp.LogBeanFactoryPostProcessor"/>
+    <bean class="com.tyatsura.spring.bfpp.FirstVerifyBeanFactoryPostProcessor"/>
+    <bean class="com.tyatsura.spring.bfpp.VerifyBeanFactoryPostProcessor"/>
+
     <!--Used for setting some constructor tht consume specific argument type (as String have StringBuffer, StringBuilder...)-->
     <bean id="driver" class="java.lang.String">
         <!--${} - expression language (JAVA EE specification)-->
