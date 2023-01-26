@@ -29,6 +29,8 @@
     <context:annotation-config/>
 
     <bean class="com.tyatsura.spring.bpp.InjectBeanPostProcessor"/>
+    <bean class="com.tyatsura.spring.bpp.OperationBeanPostProcessor"/>
+    <bean class="com.tyatsura.spring.bpp.AuditingBeanPostProcessor"/>
 
     <bean class="com.tyatsura.spring.bfpp.LogBeanFactoryPostProcessor"/>
     <bean class="com.tyatsura.spring.bfpp.FirstVerifyBeanFactoryPostProcessor"/>

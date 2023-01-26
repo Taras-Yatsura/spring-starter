@@ -1,6 +1,7 @@
 package com.tyatsura.spring;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
+import com.tyatsura.spring.database.repository.CRUDRepository;
 import com.tyatsura.spring.database.repository.CompanyRepository;
 import com.tyatsura.spring.database.repository.MoneyRepository;
 import com.tyatsura.spring.database.repository.UserRepository;
@@ -24,8 +25,11 @@ public class ApplicationRunner {
             var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
             System.out.println(userRepository);
 
-            var moneyRepo = applicationContext.getBean("moneyRepository", MoneyRepository.class);
+            //as moneyRepository now dynamic proxy - will be thrown exception that such bean not found if use
+            // MoneyRepository class. With Proxy by inheritance we don't get such problems
+            var moneyRepo = applicationContext.getBean("moneyRepository", CRUDRepository.class);
             System.out.println(moneyRepo);
+            System.out.println(moneyRepo.findById(1));
         }
 
         //To call destroy on beans app context should be closed or as it implements Autocloseable use try with resources
