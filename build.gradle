@@ -19,6 +19,9 @@ dependencies {
     implementation "org.springframework:spring-core:$springVersion"
     implementation "org.springframework:spring-context:$springVersion"
 
+    //using for annotation based bean configuration (for spring 5.3 - use java ee)
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }

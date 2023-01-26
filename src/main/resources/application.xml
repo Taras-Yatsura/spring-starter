@@ -11,6 +11,19 @@
     <!--New implementation of using properties files-->
     <context:property-placeholder location="classpath:application.properties"/>
 
+    <!--For working with Annotation based bean configuration-->
+    <!--Old implementation-->
+    <!--<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
+    <!--New implementation. Add beans:
+    -   CommonAnnotationBeanPostProcessor (@PostConstruct, @PreDestroy, @Resource)
+    -   AutowiredAnnotationBeanPostProcessor (@AutoWired, @Value)
+    -   EventListenerMethodProcessor (@EventListener)
+    -   ConfigurationClassPostProcessor (@Configuration)
+    -   PersistenceAnnotationBeanPostProcessor (@PersistenceContext - analogue EntityManagerFactory,
+        @PersistenceUnit - analogue EntityManager) (added only with Spring Data)
+    -->
+    <context:annotation-config/>
+
     <!--Old implementation of using properties files-->
     <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations" value="classpath:application.properties"/>
@@ -28,10 +41,7 @@
 
     <!--id index needed to specify which argument of constructor is specified (order should be same). If not specified - one by one-->
     <!--More clear -  use name of arg instead (see username and poolSize) -->
-    <bean id="pool1" name="p1,p2,p3" class="com.tyatsura.spring.database.pool.ConnectionPool"
-          init-method="init"
-          destroy-method="terminate"
-    >
+    <bean id="pool1" name="p1,p2,p3" class="com.tyatsura.spring.database.pool.ConnectionPool">
         <constructor-arg index="2" type="java.util.List">
             <list>
                 <value>--arg1=value1</value>

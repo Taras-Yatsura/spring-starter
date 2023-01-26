@@ -1,5 +1,7 @@
 package com.tyatsura.spring.database.pool;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.ToString;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,9 +25,9 @@ public class ConnectionPool implements InitializingBean, DisposableBean {
         this.properties = properties;
     }
 
-    //Called last
+    @PostConstruct
     private void init() {
-        System.out.println("PostConstruct using init method of " + ConnectionPool.class.getSimpleName());
+        System.out.println("@PostConstruct of " + ConnectionPool.class.getSimpleName());
     }
 
     //from the InitializingBean - not recommended to use - broke IoC
@@ -35,13 +37,12 @@ public class ConnectionPool implements InitializingBean, DisposableBean {
         System.out.println("PostConstruct using InitializingBean of " + ConnectionPool.class.getSimpleName());
     }
 
-    //Called last
+    @PreDestroy
     private void terminate() {
-        System.out.println("Destroying using destroy method of " + ConnectionPool.class.getSimpleName());
+        System.out.println("Destroying using @PreDestroy of " + ConnectionPool.class.getSimpleName());
     }
 
     //Called second
-    @Override
     public void destroy() {
         System.out.println("Destroying using DisposableBean of " + ConnectionPool.class.getSimpleName());
     }
