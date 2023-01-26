@@ -9,19 +9,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        var applicationContext = new ClassPathXmlApplicationContext("application.xml");
-        //get by type -> Map<String, Object>
-        //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
-        //System.out.println(applicationContext.getBean(ConnectionPool.class));
+        try(var applicationContext = new ClassPathXmlApplicationContext("application.xml")) {
+            //get by type -> Map<String, Object>
+            //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
+            //System.out.println(applicationContext.getBean(ConnectionPool.class));
 
-        //may be used just getBean(String name) but will be returned Object
-        System.out.println(applicationContext.getBean("pool1", ConnectionPool.class));
+            //may be used just getBean(String name) but will be returned Object
+            System.out.println(applicationContext.getBean("pool1", ConnectionPool.class));
 
-        var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
-        System.out.println(companyRepository);
+            var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
+            System.out.println(companyRepository);
 
-        var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
-        System.out.println(userRepository);
+            var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
+            System.out.println(userRepository);
+        }
 
+        //To call destroy on beans app context should be closed or as it implements Autocloseable use try with resources
+        //applicationContext.close();
     }
 }
