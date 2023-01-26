@@ -2,6 +2,7 @@ package com.tyatsura.spring;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import com.tyatsura.spring.database.repository.CompanyRepository;
+import com.tyatsura.spring.database.repository.MoneyRepository;
 import com.tyatsura.spring.database.repository.UserRepository;
 import com.tyatsura.spring.ioc.Container;
 import com.tyatsura.spring.service.UserService;
@@ -22,6 +23,9 @@ public class ApplicationRunner {
 
             var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
             System.out.println(userRepository);
+
+            var moneyRepo = applicationContext.getBean("moneyRepository", MoneyRepository.class);
+            System.out.println(moneyRepo);
         }
 
         //To call destroy on beans app context should be closed or as it implements Autocloseable use try with resources

@@ -8,6 +8,10 @@
         https://www.springframework.org/schema/context/spring-context.xsd"
 >
 
+    <!--Old implementation of using properties files-->
+    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="classpath:application.properties"/>
+    </bean>-->
     <!--New implementation of using properties files-->
     <context:property-placeholder location="classpath:application.properties"/>
 
@@ -24,10 +28,7 @@
     -->
     <context:annotation-config/>
 
-    <!--Old implementation of using properties files-->
-    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:application.properties"/>
-    </bean>-->
+    <bean class="com.tyatsura.spring.bpp.InjectBeanPostProcessor"/>
 
     <bean class="com.tyatsura.spring.bfpp.LogBeanFactoryPostProcessor"/>
     <bean class="com.tyatsura.spring.bfpp.FirstVerifyBeanFactoryPostProcessor"/>
@@ -84,4 +85,6 @@
         </constructor-arg>
         <property name="connectionPool" ref="pool1"/>
     </bean>
+
+    <bean id="moneyRepository" class="com.tyatsura.spring.database.repository.MoneyRepository"/>
 </beans>
