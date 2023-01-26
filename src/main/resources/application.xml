@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--New implementation of using properties files-->
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <!--Old implementation of using properties files-->
+    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="classpath:application.properties"/>
+    </bean>-->
 
     <!--Used for setting some constructor tht consume specific argument type (as String have StringBuffer, StringBuilder...)-->
     <bean id="driver" class="java.lang.String">
-        <constructor-arg type="java.lang.String" value="PostgresDriver"/>
+        <!--${} - expression language (JAVA EE specification)-->
+        <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
 
     <!--id index needed to specify which argument of constructor is specified (order should be same). If not specified - one by one-->
@@ -22,17 +36,24 @@
                 <ref bean="driver"/>
             </list>
         </constructor-arg>
-        <constructor-arg index="3" type="java.util.Map">
+        <constructor-arg name="properties" type="java.util.Map">
             <map>
-                <entry key="url" value="postgresUrl"/>
-                <entry key="pass" value="1234"/>
-                <!--Using references to another bean-->
-                <entry key="driver" value-ref="driver"/>
+                <entry key="url" value="${db.url}"/>
+                <entry key="pass" value="${db.password}"/>
+                <!--#{} - SpEL - spring expression language and we can use beans and all it's filed and methods -->
+                <entry key="driver" value="#{driver.substring(3)}"/>
+                <entry key="test" value="#{driver.length() > 10}"/>
+                <entry key="utilityMethod" value="#{driver.length() > T(Math).random() * 10}"/>
+                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>
+                <!--With SpEL we also can use system properties. -->
+                <entry key="currentUser" value="#{systemProperties['user.name']}"/>
+                <!--This will also first lookup .properties files that used by app and then check system properties-->
+                <entry key="currentUserAnother" value="${user.name}"/>
             </map>
         </constructor-arg>
         <!--Using references to another bean-->
-        <constructor-arg name="username" ref="driver" type="java.lang.String"/>
-        <constructor-arg name="poolSize" value="10" type="java.lang.Integer"/>
+        <constructor-arg name="username" value="${db.username}" type="java.lang.String"/>
+        <constructor-arg name="poolSize" value="${db.pool.size}" type="java.lang.Integer"/>
     </bean>
     <!--<bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool"/>-->
 
