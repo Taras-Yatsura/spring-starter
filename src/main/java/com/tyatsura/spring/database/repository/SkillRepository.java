@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 @ToString
 public class SkillRepository {
-    private final ConnectionPool connectionPoolAutowired;
-    /*private final ConnectionPool connectionPoolResource;*/
+    private final ConnectionPool connectionPool1;
+    private final ConnectionPool connectionPool2;
 
     //Autowired should use @Qualifier if context have more than one Bean
     //or should be used field with same name as bean
     //or if we need many bean with same type we can inject such beans in collection
 
     @Autowired
-    public SkillRepository(@Qualifier("pool1") ConnectionPool connectionPoolAutowired/*,*/
-                           /*@Qualifier("pool2") ConnectionPool connectionPoolResource*/) {
-        this.connectionPoolAutowired = connectionPoolAutowired;
-        /*this.connectionPoolResource = connectionPoolResource;*/
+    public SkillRepository(@Qualifier("pool1") ConnectionPool connectionPool1,
+                           @Qualifier("pool2") ConnectionPool connectionPool2) {
+        this.connectionPool1 = connectionPool1;
+        this.connectionPool2 = connectionPool2;
     }
 
 

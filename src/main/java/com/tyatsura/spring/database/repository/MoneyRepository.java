@@ -7,6 +7,7 @@ import com.tyatsura.spring.database.pool.ConnectionPool;
 import jakarta.annotation.PostConstruct;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class MoneyRepository implements CRUDRepository<Integer, Money> {
     private final ConnectionPool connectionPool;
 
     @Autowired
-    public MoneyRepository(ConnectionPool connectionPool) {
+    public MoneyRepository(@Qualifier("pool2") ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
