@@ -8,13 +8,9 @@
         https://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--Old implementation of using properties files-->
-    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:application.properties"/>
-    </bean>-->
-    <!--New implementation of using properties files-->
-    <context:property-placeholder location="classpath:application.properties"/>
-
+    <!--Used for creating beans without explicit setting here (now we use constructor injection and final fields)-->
+    <!--Include annotation-config-->
+    <context:component-scan base-package="com.tyatsura.spring"/>
     <!--For working with Annotation based bean configuration-->
     <!--Old implementation-->
     <!--<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
@@ -26,15 +22,15 @@
     -   PersistenceAnnotationBeanPostProcessor (@PersistenceContext - analogue EntityManagerFactory,
         @PersistenceUnit - analogue EntityManager) (added only with Spring Data)
     -->
-    <context:annotation-config/>
+    <!--<context:annotation-config/>-->
 
-    <bean class="com.tyatsura.spring.bpp.InjectBeanPostProcessor"/>
-    <bean class="com.tyatsura.spring.bpp.OperationBeanPostProcessor"/>
-    <bean class="com.tyatsura.spring.bpp.AuditingBeanPostProcessor"/>
 
-    <bean class="com.tyatsura.spring.bfpp.LogBeanFactoryPostProcessor"/>
-    <bean class="com.tyatsura.spring.bfpp.FirstVerifyBeanFactoryPostProcessor"/>
-    <bean class="com.tyatsura.spring.bfpp.VerifyBeanFactoryPostProcessor"/>
+    <!--Old implementation of using properties files-->
+    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="classpath:application.properties"/>
+    </bean>-->
+    <!--New implementation of using properties files-->
+    <context:property-placeholder location="classpath:application.properties"/>
 
     <!--Used for setting some constructor tht consume specific argument type (as String have StringBuffer, StringBuilder...)-->
     <bean id="driver" class="java.lang.String">
