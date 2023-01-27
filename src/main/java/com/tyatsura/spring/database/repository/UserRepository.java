@@ -1,19 +1,18 @@
 package com.tyatsura.spring.database.repository;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
-import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+@Repository
 @ToString
 public class UserRepository {
-    //use setter for injection beans
-    //this approach is bad because object not immutable
-    //and cause cyclic dependence of two beans
-    //used only for optional beans
-    @Setter
     private ConnectionPool connectionPool;
 
-    public UserRepository(ConnectionPool connectionPool) {
+    @Autowired
+    public UserRepository(@Qualifier("pool1") ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 }

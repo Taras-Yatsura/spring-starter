@@ -1,12 +1,14 @@
 package com.tyatsura.spring;
 
+import com.tyatsura.spring.config.ApplicationConfiguration;
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import com.tyatsura.spring.database.repository.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        try(var applicationContext = new ClassPathXmlApplicationContext("application.xml")) {
+        try(var applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
             //get by type -> Map<String, Object>
             //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
             //System.out.println(applicationContext.getBean(ConnectionPool.class));

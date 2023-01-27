@@ -1,21 +1,27 @@
 package com.tyatsura.spring.database.repository;
 
 import com.tyatsura.spring.bpp.Auditing;
-import com.tyatsura.spring.bpp.InjectBean;
 import com.tyatsura.spring.bpp.Operation;
 import com.tyatsura.spring.database.entity.Money;
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import jakarta.annotation.PostConstruct;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 @Operation
 @Auditing
 @ToString
 public class MoneyRepository implements CRUDRepository<Integer, Money> {
-    @InjectBean
-    private ConnectionPool connectionPool;
+    private final ConnectionPool connectionPool;
+
+    @Autowired
+    public MoneyRepository(ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
+    }
 
     @PostConstruct
     private void init() {

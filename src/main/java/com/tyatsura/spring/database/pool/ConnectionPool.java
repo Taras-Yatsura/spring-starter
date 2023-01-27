@@ -3,33 +3,21 @@ package com.tyatsura.spring.database.pool;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.ToString;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
 //First calling @PostConstruct and @PreDestroy
 //PreDestroy and analogues calling only for singleton beans because prototypes not saved in application context
+@Component("pool1")
 @ToString
-public class ConnectionPool implements InitializingBean, DisposableBean {
+public class ConnectionPool {
     private final String username;
     private final Integer poolSize;
-    private final List<Object> args;
-    private final Map<String, Object> properties;
-    @Value("#{'${db.hosts}'.split(',')}}")
-    private List<String> hosts;
 
-    public ConnectionPool(String username, Integer poolSize, List<Object> args, Map<String, Object> properties) {
+    public ConnectionPool(@Value("${db.username}") String username,
+                          @Value("${db.pool.size}") Integer poolSize) {
         this.username = username;
         this.poolSize = poolSize;
-        this.args = args;
-        this.properties = properties;
-    }
-
-    public static ConnectionPool of(String username, Integer poolSize, List<Object> args, Map<String, Object> properties) {
-        return new ConnectionPool(username, poolSize, args, properties);
     }
 
     @PostConstruct
@@ -37,20 +25,8 @@ public class ConnectionPool implements InitializingBean, DisposableBean {
         System.out.println("@PostConstruct of " + ConnectionPool.class.getSimpleName());
     }
 
-    //from the InitializingBean - not recommended to use - broke IoC
-    //Called second
-    @Override
-    public void afterPropertiesSet() {
-        System.out.println("PostConstruct using InitializingBean of " + ConnectionPool.class.getSimpleName());
-    }
-
     @PreDestroy
     private void terminate() {
         System.out.println("Destroying using @PreDestroy of " + ConnectionPool.class.getSimpleName());
-    }
-
-    //Called second
-    public void destroy() {
-        System.out.println("Destroying using DisposableBean of " + ConnectionPool.class.getSimpleName());
     }
 }
