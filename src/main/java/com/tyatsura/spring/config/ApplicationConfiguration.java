@@ -39,6 +39,7 @@ public class ApplicationConfiguration {
 
     //by default will be recreated first repo because used method name (as it Prototype)
     @Bean("userRepository2")
+    @Profile("prod|web") //can be used ! & |
     @Autowired
     public UserRepository userRepository(@Qualifier("pool2") ConnectionPool connectionPool) {
         return new UserRepository(connectionPool);

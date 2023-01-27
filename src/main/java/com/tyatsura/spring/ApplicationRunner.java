@@ -9,6 +9,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ApplicationRunner {
     public static void main(String[] args) {
         try(var applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
+        /* Another way to configure active profiles. Not preferable because this can be used only with beans that
+        taking apart in bean life cycle and need to call register (not initialize Environment bean) and refresh (may
+        be called only once
+        try(var applicationContext = new AnnotationConfigApplicationContext()) {
+            applicationContext.register(ApplicationConfiguration.class);
+            applicationContext.getEnvironment().setActiveProfiles("web", "prod");
+            applicationContext.refresh();
+        */
             //get by type -> Map<String, Object>
             //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
             //System.out.println(applicationContext.getBean(ConnectionPool.class));
