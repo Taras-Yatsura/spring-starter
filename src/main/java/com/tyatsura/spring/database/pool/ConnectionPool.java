@@ -5,6 +5,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.ToString;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,18 @@ public class ConnectionPool implements InitializingBean, DisposableBean {
     private final Integer poolSize;
     private final List<Object> args;
     private final Map<String, Object> properties;
+    @Value("#{'${db.hosts}'.split(',')}}")
+    private List<String> hosts;
 
     public ConnectionPool(String username, Integer poolSize, List<Object> args, Map<String, Object> properties) {
         this.username = username;
         this.poolSize = poolSize;
         this.args = args;
         this.properties = properties;
+    }
+
+    public static ConnectionPool of(String username, Integer poolSize, List<Object> args, Map<String, Object> properties) {
+        return new ConnectionPool(username, poolSize, args, properties);
     }
 
     @PostConstruct

@@ -16,13 +16,22 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
         Arrays.stream(bean.getClass().getDeclaredFields())
               .filter(field -> field.isAnnotationPresent(InjectBean.class))
               .forEach(field -> {
-                  Object beanToInject = context.getBean(field.getType());
+                  //get all beans for type
+                  var beansForSuchField = context.getBeansOfType(field.getType());
+                  var beanToInject = beansForSuchField.entrySet().stream().findAny();
+                  if (beanToInject.isEmpty()) {
+                      throw new RuntimeException("Check application context for such bean type");
+                  }
+
                   ReflectionUtils.makeAccessible(field);
-                  ReflectionUtils.setField(field, bean, beanToInject);
+                  //set any of the beans with such type
+                  ReflectionUtils.setField(field, bean, beanToInject.get().getValue());
               });
+
         return bean;
     }
 
+    //calling before bean post processing
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;

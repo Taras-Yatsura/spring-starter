@@ -1,12 +1,7 @@
 package com.tyatsura.spring;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
-import com.tyatsura.spring.database.repository.CRUDRepository;
-import com.tyatsura.spring.database.repository.CompanyRepository;
-import com.tyatsura.spring.database.repository.MoneyRepository;
-import com.tyatsura.spring.database.repository.UserRepository;
-import com.tyatsura.spring.ioc.Container;
-import com.tyatsura.spring.service.UserService;
+import com.tyatsura.spring.database.repository.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
@@ -17,7 +12,8 @@ public class ApplicationRunner {
             //System.out.println(applicationContext.getBean(ConnectionPool.class));
 
             //may be used just getBean(String name) but will be returned Object
-            System.out.println(applicationContext.getBean("pool1", ConnectionPool.class));
+            var pool1 = applicationContext.getBean("pool1", ConnectionPool.class);
+            System.out.println(pool1);
 
             var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
             System.out.println(companyRepository);
@@ -30,6 +26,9 @@ public class ApplicationRunner {
             var moneyRepo = applicationContext.getBean("moneyRepository", CRUDRepository.class);
             System.out.println(moneyRepo);
             System.out.println(moneyRepo.findById(1));
+
+            var skillRepo = applicationContext.getBean("skillRepository", SkillRepository.class);
+            System.out.println(skillRepo);
         }
 
         //To call destroy on beans app context should be closed or as it implements Autocloseable use try with resources

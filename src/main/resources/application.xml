@@ -72,7 +72,22 @@
         <constructor-arg name="username" value="${db.username}" type="java.lang.String"/>
         <constructor-arg name="poolSize" value="${db.pool.size}" type="java.lang.Integer"/>
     </bean>
-    <!--<bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool"/>-->
+    <bean id="pool2" name= "p4,p5" class="com.tyatsura.spring.database.pool.ConnectionPool" factory-method="of">
+        <constructor-arg name="username" value="root" type="java.lang.String"/>
+        <constructor-arg name="poolSize" value="1" type="java.lang.Integer"/>
+        <constructor-arg name="args" type="java.util.List">
+            <list>
+                <value>--debug=true</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg name="properties" type="java.util.Map">
+            <map>
+                <entry key="pass" value="toor"/>
+                <entry key="url" value="${db.url}"/>
+                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>
+            </map>
+        </constructor-arg>
+    </bean>
 
     <!--Using references to another bean-->
     <bean id="companyRepository" class="com.tyatsura.spring.database.repository.CompanyRepository" factory-method="of">
@@ -89,4 +104,6 @@
     </bean>
 
     <bean id="moneyRepository" class="com.tyatsura.spring.database.repository.MoneyRepository"/>
+
+    <bean id="skillRepository" class="com.tyatsura.spring.database.repository.SkillRepository"/>
 </beans>
