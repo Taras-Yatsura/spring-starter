@@ -11,11 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CustomJpaConfiguration {
 
+    /*one of the methods to set custom yml file configuration
     @Bean
     @ConfigurationProperties(prefix = "db", ignoreInvalidFields = true)
     public static CustomDatabaseProperties customDatabaseProperties() {
         return new CustomDatabaseProperties();
-    }
+    }*/
 
     @PostConstruct
     void init() {

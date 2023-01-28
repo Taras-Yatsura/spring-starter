@@ -1,28 +1,31 @@
 package com.tyatsura.spring.config;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.List;
 import java.util.Map;
 
 //Object should be POJO
-@Data
-@NoArgsConstructor
+@Value
+//@ConstructorBinding
+//to work use @Component annotation or @ConfigurationPropertyScan on ApplicationRunner class
+//Also can be used Record
+@ConfigurationProperties(prefix = "db")
 public class CustomDatabaseProperties {
-    private String userName;
-    private String password;
-    private String driver;
-    private String url;
-    private String hosts;
-    private PoolProperties pool;
-    private List<PoolProperties> pools;
-    private Map<String, Object> properties;
+    String username;
+    String password;
+    String driver;
+    String url;
+    String hosts;
+    PoolProperties pool;
+    List<PoolProperties> pools;
+    Map<String, Object> properties;
 
-    @Data
-    @NoArgsConstructor
+    @Value
     public static class PoolProperties {
-        private Integer size;
-        private Integer timeout;
+        Integer size;
+        Integer timeout;
     }
 }

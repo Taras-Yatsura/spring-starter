@@ -28,9 +28,8 @@ public class OperationBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = operationBeans.get(beanName);
-        System.out.println(bean.getClass().getSimpleName() + (beanClass == null ? " bean not Operation" :
-                                                              "bean is Operation"));
         if (beanClass != null) {
+            System.out.println("Found Operation bean: " + bean);
             return Proxy.newProxyInstance(beanClass.getClassLoader(),
                                           beanClass.getInterfaces(),
                                           (proxy, method, args) -> {

@@ -1,5 +1,5 @@
 db:
-  username: {username.value:postgres}
+  username: ${username.value:postgres}
   password: pass
   pool:
     size: 12
@@ -17,7 +17,7 @@ db:
     third.value: Third
   driver: PostgresDriver
   url: postgres:5432
-  hosts: localhost, 127.0.0.1
+  hosts: localhost,127.0.0.1
 spring:
   profiles:
     active: qa
