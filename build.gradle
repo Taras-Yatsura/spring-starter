@@ -1,6 +1,9 @@
 plugins {
     id 'java'
     id "io.freefair.lombok" version "6.6.1"
+    id 'org.springframework.boot' version '3.0.2'
+    //used for checked dependencies that works with spring boot
+    id "io.spring.dependency-management" version '1.1.0'
 }
 
 group 'org.example'
@@ -16,17 +19,12 @@ ext {
 }
 
 dependencies {
-    implementation "org.springframework:spring-core:$springVersion"
-    implementation "org.springframework:spring-context:$springVersion"
+    //we don't set version - version takes from plugins
+    //contains all spring dependencies and Jakarta. Inject not used wide with spring
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.postgresql:postgresql'
 
-    //using for annotation based bean configuration (for spring 5.3 - use java ee)
-    //JSR 250
-    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
-
-    implementation 'javax.inject:javax.inject:1'
-
-    implementation 'org.postgresql:postgresql:42.5.1'
-
+    //will be deleted later with starter
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }

@@ -1,47 +1,13 @@
 package com.tyatsura.spring;
 
-import com.tyatsura.spring.config.ApplicationConfiguration;
-import com.tyatsura.spring.database.pool.ConnectionPool;
-import com.tyatsura.spring.database.repository.*;
-import com.tyatsura.spring.service.MoneyService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//Clear this class and delete application.xml also as it used by spring boot
+//Also can be used Spring starter from site and from IntelliJ Idea
+@SpringBootApplication
 public class ApplicationRunner {
     public static void main(String[] args) {
-        try(var applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
-        /* Another way to configure active profiles. Not preferable because this can be used only with beans that
-        taking apart in bean life cycle and need to call register (not initialize Environment bean) and refresh (may
-        be called only once
-        try(var applicationContext = new AnnotationConfigApplicationContext()) {
-            applicationContext.register(ApplicationConfiguration.class);
-            applicationContext.getEnvironment().setActiveProfiles("web", "prod");
-            applicationContext.refresh();
-        */
-            //get by type -> Map<String, Object>
-            //will be thrown org.springframework.beans.factory.NoUniqueBeanDefinitionException
-            //System.out.println(applicationContext.getBean(ConnectionPool.class));
-
-            //may be used just getBean(String name) but will be returned Object
-            var pool1 = applicationContext.getBean("pool1", ConnectionPool.class);
-            System.out.println(pool1);
-
-            var companyRepository = applicationContext.getBean("companyRepository", CompanyRepository.class);
-            System.out.println(companyRepository);
-
-            var userRepository = applicationContext.getBean("userRepository", UserRepository.class);
-            System.out.println(userRepository);
-
-            //as moneyRepository now dynamic proxy - will be thrown exception that such bean not found if use
-            // MoneyRepository class. With Proxy by inheritance we don't get such problems
-            var moneyService = applicationContext.getBean("moneyService", MoneyService.class);
-            System.out.println(moneyService);
-            System.out.println(moneyService.findById(1));
-
-            var skillRepo = applicationContext.getBean("skillRepository", SkillRepository.class);
-            System.out.println(skillRepo);
-        }
-
-        //To call destroy on beans app context should be closed or as it implements Autocloseable use try with resources
-        //applicationContext.close();
+        SpringApplication.run(ApplicationRunner.class, args);
     }
 }
