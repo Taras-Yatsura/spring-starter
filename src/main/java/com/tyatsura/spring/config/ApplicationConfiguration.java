@@ -12,14 +12,9 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.stereotype.Component;
 
 @Configuration
-@PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = "com.tyatsura.spring",
-               useDefaultFilters = false,
-               includeFilters = {
-                                @Filter(type = FilterType.ANNOTATION, value = Component.class),
-                                @Filter(type = FilterType.ASSIGNABLE_TYPE, value = CRUDRepository.class),
-                                @Filter(type = FilterType.REGEX, pattern = "com\\..+Repository")
-               })
+//@PropertySource also have default definition in @SpringBootApplication (will be used application.properties
+//used @ComponentScan from @SpringBootConfiguration that already is @Configuration and has default component scan
+// already configured
 //for configuration with xml/groovy/property
 //@ImportResource("classpath:application.xml")
 //for scanning packages or classes from another modules, dependencies
