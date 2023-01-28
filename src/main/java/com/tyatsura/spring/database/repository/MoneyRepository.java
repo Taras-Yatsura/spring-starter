@@ -5,8 +5,8 @@ import com.tyatsura.spring.bpp.Operation;
 import com.tyatsura.spring.database.entity.Money;
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +16,10 @@ import java.util.Optional;
 @Operation
 @Auditing
 @ToString
+@RequiredArgsConstructor
 public class MoneyRepository implements CRUDRepository<Integer, Money> {
+    @Qualifier("pool2")
     private final ConnectionPool connectionPool;
-
-    @Autowired
-    public MoneyRepository(@Qualifier("pool2") ConnectionPool connectionPool) {
-        this.connectionPool = connectionPool;
-    }
 
     @PostConstruct
     private void init() {
