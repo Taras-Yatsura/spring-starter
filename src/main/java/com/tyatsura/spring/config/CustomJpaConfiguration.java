@@ -2,11 +2,13 @@ package com.tyatsura.spring.config;
 
 import com.tyatsura.spring.config.condition.JpaCondition;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
+@Slf4j
 @Conditional(JpaCondition.class)
 @Configuration
 public class CustomJpaConfiguration {
@@ -20,6 +22,6 @@ public class CustomJpaConfiguration {
 
     @PostConstruct
     void init() {
-        System.out.println("Custom JPA configuration is enabled");
+        log.debug("Custom JPA configuration is enabled");
     }
 }

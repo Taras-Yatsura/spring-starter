@@ -7,11 +7,13 @@ import com.tyatsura.spring.database.pool.ConnectionPool;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @Operation
 @Auditing
@@ -23,17 +25,17 @@ public class MoneyRepository implements CRUDRepository<Integer, Money> {
 
     @PostConstruct
     private void init() {
-        System.out.printf("%s is initialized\n", MoneyRepository.class.getSimpleName());
+        log.debug("Initialized");
     }
 
     @Override
     public Optional<Money> findById(Integer id) {
-        System.out.printf("Find by id %d method\n", id);
+        log.debug("Find by id {} method", id);
         return Optional.of(new Money(id));
     }
 
     @Override
     public void delete(Money entity) {
-        System.out.printf("Delete %s method\n", entity);
+        log.debug("Delete {} method", entity);
     }
 }

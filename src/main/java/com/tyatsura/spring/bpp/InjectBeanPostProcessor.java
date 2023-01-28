@@ -1,5 +1,6 @@
 package com.tyatsura.spring.bpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.util.Arrays;
 
+@Slf4j
 @Component
 public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
     private ApplicationContext context;
@@ -22,6 +24,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
                   var beansForSuchField = context.getBeansOfType(field.getType());
                   var beanToInject = beansForSuchField.entrySet().stream().findAny();
                   if (beanToInject.isEmpty()) {
+                      log.error("There is beans with type {}", field.getType());
                       throw new RuntimeException("Check application context for such bean type");
                   }
 

@@ -1,5 +1,6 @@
 package com.tyatsura.spring.bfpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Component;
 //than will be called FirstVerifyBeanFactoryPostProcessor and after VerifyBeanFactoryPostProcessor
 // (less order - earlier call)
 @Component
+@Slf4j
 public class LogBeanFactoryPostProcessor implements BeanFactoryPostProcessor, PriorityOrdered {
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        System.out.println();
+        log.debug("called");
     }
 
     @Override

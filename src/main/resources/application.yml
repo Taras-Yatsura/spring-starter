@@ -21,3 +21,10 @@ db:
 spring:
   profiles:
     active: qa
+logging:
+  level:
+    root: warn
+    com.tyatsura.spring.database.pool: debug
+  file:
+    name: application.log
+    path: /

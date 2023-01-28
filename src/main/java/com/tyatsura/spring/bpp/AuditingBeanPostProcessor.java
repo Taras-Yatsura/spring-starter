@@ -1,5 +1,6 @@
 package com.tyatsura.spring.bpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class AuditingBeanPostProcessor implements BeanPostProcessor {
     private final Map<String, Class<?>> auditingBeans = new HashMap<>();
@@ -19,6 +21,7 @@ public class AuditingBeanPostProcessor implements BeanPostProcessor {
         // especially @PostConstruct which will be called last one) all manipulation with types, wrapping them should
         // be used in AfterInitialization (all that be change Annotations, fields, methods)
         if (bean.getClass().isAnnotationPresent(Auditing.class)) {
+            log.debug("Found @Operation bean: {}", beanName);
             auditingBeans.put(beanName, bean.getClass());
         }
         return bean;
@@ -31,14 +34,14 @@ public class AuditingBeanPostProcessor implements BeanPostProcessor {
             return Proxy.newProxyInstance(beanClass.getClassLoader(),
                                           beanClass.getInterfaces(),
                                           (proxy, method, args) -> {
-                                              System.out.println("Starting audit of method: " + method.getName());
+                                              log.debug("Starting audit of method: {}", method.getName());
                                               var startTime = System.nanoTime();
                                               try {
                                                   //here will be used maybe already wrapped or proxy class for
                                                   // multiple proxying
                                                   return method.invoke(bean, args);
                                               } finally {
-                                                  System.out.println("Execution time: " + (System.nanoTime() - startTime) + " nanoseconds");
+                                                  log.debug("Execution time: {} nanoseconds", (System.nanoTime() - startTime));
                                               }
                                           });
         }

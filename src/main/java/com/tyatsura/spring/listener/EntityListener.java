@@ -1,9 +1,12 @@
-package com.tyatsura.spring.listener.entity;
+package com.tyatsura.spring.listener;
 
+import com.tyatsura.spring.listener.entity.EntityEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class EntityListener {
 
@@ -13,6 +16,6 @@ public class EntityListener {
     //root.args - arguments of method. also can be used jusr args
     @EventListener(condition = "#root.args[0].getAccessType().name() == 'READ'")
     public void acceptEntityRead(EntityEvent entityEvent) {
-        System.out.println("Entity " + entityEvent);
+        log.debug("Entity {} consumed", entityEvent);
     }
 }
