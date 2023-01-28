@@ -3,8 +3,8 @@ package com.tyatsura.spring;
 import com.tyatsura.spring.config.ApplicationConfiguration;
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import com.tyatsura.spring.database.repository.*;
+import com.tyatsura.spring.service.MoneyService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
@@ -33,9 +33,9 @@ public class ApplicationRunner {
 
             //as moneyRepository now dynamic proxy - will be thrown exception that such bean not found if use
             // MoneyRepository class. With Proxy by inheritance we don't get such problems
-            var moneyRepo = applicationContext.getBean("moneyRepository", CRUDRepository.class);
-            System.out.println(moneyRepo);
-            System.out.println(moneyRepo.findById(1));
+            var moneyService = applicationContext.getBean("moneyService", MoneyService.class);
+            System.out.println(moneyService);
+            System.out.println(moneyService.findById(1));
 
             var skillRepo = applicationContext.getBean("skillRepository", SkillRepository.class);
             System.out.println(skillRepo);
