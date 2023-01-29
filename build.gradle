@@ -24,9 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.postgresql:postgresql'
 
-    //will be deleted later with starter
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {

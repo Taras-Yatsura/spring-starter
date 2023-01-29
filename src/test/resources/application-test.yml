@@ -1,0 +1,10 @@
+db:
+  username: testUser
+  password: testPass
+logging:
+  level:
+    root: trace
+    org.springframework: warn
+  file:
+    name: test.log
+    path: /
