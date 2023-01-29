@@ -21,9 +21,18 @@ db:
 spring:
   profiles:
     active: qa
+  datasource:
+    url: jdbc:postgresql://localhost:12345/postgres
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
 logging:
   level:
-    root: warn
+    root: info
     com.tyatsura.spring.database.pool: debug
   file:
     name: application.log
