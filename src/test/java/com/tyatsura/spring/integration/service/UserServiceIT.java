@@ -1,7 +1,7 @@
 package com.tyatsura.spring.integration.service;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
-import com.tyatsura.spring.integration.service.annotation.IT;
+import com.tyatsura.spring.integration.annotation.IT;
 import com.tyatsura.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

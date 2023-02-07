@@ -1,6 +1,6 @@
-package com.tyatsura.spring.integration.service.annotation;
+package com.tyatsura.spring.integration.annotation;
 
-import com.tyatsura.spring.integration.service.TestApplicationRunner;
+import com.tyatsura.spring.integration.TestApplicationRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 

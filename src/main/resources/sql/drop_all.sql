@@ -1,0 +1,1 @@
+DROP TABLE company, company_locales, users, payment, chat, users_chat;

@@ -1,12 +1,11 @@
 package com.tyatsura.spring.integration.service;
 
 import com.tyatsura.spring.dto.MoneyReadDto;
-import com.tyatsura.spring.integration.service.annotation.IT;
+import com.tyatsura.spring.integration.annotation.IT;
 import com.tyatsura.spring.service.MoneyService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.TestConstructor;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

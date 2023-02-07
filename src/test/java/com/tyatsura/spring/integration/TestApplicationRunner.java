@@ -1,4 +1,4 @@
-package com.tyatsura.spring.integration.service;
+package com.tyatsura.spring.integration;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
 import org.springframework.boot.test.context.TestConfiguration;

@@ -3,7 +3,7 @@ db:
   password: testPass
 logging:
   level:
-    root: trace
+    root: warn
     org.springframework: warn
   file:
     name: test.log
