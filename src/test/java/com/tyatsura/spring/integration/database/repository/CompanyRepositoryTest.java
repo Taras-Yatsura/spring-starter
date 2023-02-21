@@ -63,9 +63,17 @@ public class CompanyRepositoryTest {
      * EntityManager - proxy that created with aspects using CGLib
      */
     private static final Integer APPLE_ID = 4;
+    private static final String GOOGLE = "Google";
     private final EntityManager entityManager;
     private final TransactionTemplate transactionTemplate;
     private final CompanyRepository companyRepository;
+
+    @Test
+    void checkByQueries() {
+        assertTrue(companyRepository.findByName(GOOGLE).isPresent());
+        assertFalse(companyRepository.findByNameContainingIgnoreCase("a").isEmpty());
+    }
+
 
     @Test
     void delete() {
