@@ -4,10 +4,13 @@ import com.tyatsura.spring.database.entity.Company;
 import com.tyatsura.spring.integration.annotation.IT;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Map;
 
@@ -53,31 +56,45 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @IT
 @RequiredArgsConstructor
-@Transactional
-@Commit
+@Slf4j
 public class CompanyRepositoryTest {
     /**
      * EntityManager - proxy that created with aspects using CGLib
      */
     private final EntityManager entityManager;
+    private final TransactionTemplate transactionTemplate;
 
     /**
      * Direct using of EM in Spring application <b><u>not allowed</u></b>. This is only explanation. <br>
      * Before using of Spring we must open transactions directly in such cases where we have lazy initialization.
      * After first call to DB transaction is already closed and we will get LazyInitializationException ... could not
-     * initialize proxy - no Session
+     * initialize proxy - no Session.<br>
+     * <br>
+     * In case of using {@link TransactionTemplate} we should surround our code with try catch and catch all checked
+     * exceptions because in {@link TransactionTemplate#execute(TransactionCallback)} this exception will be rethrow.
+     * <br> {@link TransactionTemplate} used for transactions manual management.
     */
     @Test
     void findById() {
         /*var transaction = entityManager.getTransaction();
         transaction.begin();*/
-        var company = entityManager.find(Company.class, 1);
-        assertNotNull(company);
-        assertEquals(2, company.getLocales().size());
+        transactionTemplate.executeWithoutResult(tx -> {
+            try {
+                var company = entityManager.find(Company.class, 1);
+                assertNotNull(company);
+                assertEquals(2, company.getLocales().size());
+            } catch (RuntimeException | Error re) {
+                throw re;
+            } catch (Exception e) {
+                log.error("We catch checked exception:", e);
+            }
+        });
+
         /*transaction.rollback();*/
     }
 
     @Test
+    @Commit
     void save() {
         var company = Company.builder()
                 .name("Apple")
