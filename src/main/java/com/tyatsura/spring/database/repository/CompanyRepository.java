@@ -1,15 +1,14 @@
 package com.tyatsura.spring.database.repository;
 
-import com.tyatsura.spring.database.pool.ConnectionPool;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import com.tyatsura.spring.database.entity.Company;
+import org.springframework.data.repository.Repository;
 
-@Repository
-@ToString
-@RequiredArgsConstructor
-public class CompanyRepository {
-    @Qualifier("pool2")
-    private final ConnectionPool connectionPool;
+import java.util.Optional;
+
+/**
+ * Here used {@link org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration}
+ */
+public interface CompanyRepository extends Repository<Company, Integer> {
+    Optional<Company> findById(Integer id);
+    void delete(Company company);
 }

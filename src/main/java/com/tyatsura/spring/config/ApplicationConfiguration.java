@@ -1,15 +1,12 @@
 package com.tyatsura.spring.config;
 
 import com.tyatsura.spring.database.pool.ConnectionPool;
-import com.tyatsura.spring.database.repository.CRUDRepository;
 import com.tyatsura.spring.database.repository.UserRepository;
 import com.tyatsura.web.config.WebConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.stereotype.Component;
 
 @Configuration
 //@PropertySource also have default definition in @SpringBootApplication (will be used application.properties

@@ -1,6 +1,7 @@
 package com.tyatsura.spring.integration.database.repository;
 
 import com.tyatsura.spring.database.entity.Company;
+import com.tyatsura.spring.database.repository.CompanyRepository;
 import com.tyatsura.spring.integration.annotation.IT;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -61,8 +62,19 @@ public class CompanyRepositoryTest {
     /**
      * EntityManager - proxy that created with aspects using CGLib
      */
+    private static final Integer APPLE_ID = 4;
     private final EntityManager entityManager;
     private final TransactionTemplate transactionTemplate;
+    private final CompanyRepository companyRepository;
+
+    @Test
+    void delete() {
+        var company = companyRepository.findById(APPLE_ID);
+        assertTrue(company.isPresent());
+        company.ifPresent(companyRepository::delete);
+        entityManager.flush();
+        assertTrue(companyRepository.findById(APPLE_ID).isEmpty());
+    }
 
     /**
      * Direct using of EM in Spring application <b><u>not allowed</u></b>. This is only explanation. <br>
