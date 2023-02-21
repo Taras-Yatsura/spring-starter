@@ -41,6 +41,10 @@ public class OperationBeanPostProcessor implements BeanPostProcessor {
                                                       // multiple proxying
                                                       return method.invoke(bean, args);
                                                   }
+                                                  catch (Exception e) {
+                                                      log.debug("Rollback operation");
+                                                      throw e;
+                                                  }
                                                   finally {
                                                       log.debug("Closing operation");
                                                   }
