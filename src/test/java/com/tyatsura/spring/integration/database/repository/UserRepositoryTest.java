@@ -6,6 +6,10 @@ import com.tyatsura.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,5 +51,34 @@ class UserRepositoryTest {
 
         var theSameIvanUser = userRepository.getReferenceById(1L);
         assertEquals(User.Role.USER, theSameIvanUser.getRole());
+    }
+
+    @Test
+    void checkFirst() {
+        var topUser = userRepository.findTopByOrderByIdDesc();
+        assertTrue(topUser.isPresent());
+        topUser.ifPresent(user -> assertEquals(5L, user.getId()));
+    }
+
+    @Test
+    void checkFirst3() {
+        var allUsers = userRepository.findTop3ByBirthDateBeforeOrderByBirthDateDesc(LocalDate.now());
+        assertEquals(3, allUsers.size());
+    }
+
+    @Test
+    void checkSort() {
+        //var sortByName = Sort.by("firstName").and(Sort.by("lastName"));
+        var sort = Sort.sort(User.class);
+        var sortByName = sort.by(User::getFirstname).and(sort.by(User::getLastname));
+        var allUsers = userRepository.findTop3ByBirthDateBefore(LocalDate.now(), sortByName);
+        assertEquals(3, allUsers.size());
+    }
+
+    @Test
+    void checkPageable() {
+        var sort = Sort.sort(User.class);
+        var result = userRepository.findAllBy(PageRequest.of(1, 2, sort.by(User::getId)));
+        assertEquals(2, result.size());
     }
 }
