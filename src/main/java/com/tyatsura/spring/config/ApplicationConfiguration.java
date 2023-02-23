@@ -28,22 +28,4 @@ public class ApplicationConfiguration {
     public ConnectionPool pool3() {
         return new ConnectionPool("testUser", 1);
     }
-
-    //by default will be recreated first repo because used method name (as it Prototype)
-    @Bean("userRepository2")
-    @Profile("prod|web") //can be used ! & |
-    @Autowired
-    public UserRepository userRepository(@Qualifier("pool2") ConnectionPool connectionPool) {
-        return new UserRepository(connectionPool);
-    }
-
-    @Bean("userRepository3")
-    public UserRepository userRepository3() {
-        // if set @Configuration(proxyBeanMethods = false) such bean creating not allowed because this turning off
-        // Service Locator Pattern using for creating of beans with proxy. And will be created new object every time
-        pool3();
-        pool3();
-        pool3();
-        return new UserRepository(pool3());
-    }
 }

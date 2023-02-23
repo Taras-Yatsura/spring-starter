@@ -1,16 +1,19 @@
 package com.tyatsura.spring.database.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Here override toString, hashcode and equals methods to solve StackOverflowError as UserChat have User reference
+ * and as username is unique.
+ */
 @Data
+@ToString(exclude = "userChats")
+@EqualsAndHashCode(of = "username")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
