@@ -2,6 +2,7 @@ package com.tyatsura.spring.database.repository;
 
 import com.tyatsura.spring.database.entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
  * @see org.springframework.data.repository.CrudRepository
  * @see JpaRepository
  * @see org.springframework.data.repository.query.parser.PartTree
+ * @see org.springframework.data.repository.query.RepositoryQuery
  */
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
     /**
@@ -26,7 +28,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
      * @param name field that presents in table in DB
      * @return {@code Optional<Company>}
      */
-    Optional<Company> findByName(String name);
+    Optional<Company> findByName(@Param("name2") String name);
 
     /**
      * Here we create query that will look entities by parameter with regex that used in LIKE SQL operator. Another
