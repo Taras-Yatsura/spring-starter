@@ -78,7 +78,21 @@ class UserRepositoryTest {
     @Test
     void checkPageable() {
         var sort = Sort.sort(User.class);
-        var result = userRepository.findAllBy(PageRequest.of(1, 2, sort.by(User::getId)));
-        assertEquals(2, result.size());
+        //!!! starts from 0
+        var page = userRepository.findAllBy(PageRequest.of(0, 2, sort.by(User::getId)));
+
+        System.out.println("First page:");
+        page.forEach(System.out::println);
+        while (page.hasNext()) {
+            page = userRepository.findAllBy(page.nextPageable());
+            System.out.println("Next page");
+            page.forEach(System.out::println);
+        }
+
+        User lastUser = page.stream()
+                             .reduce((first, second) -> second)
+                             .orElse(null);
+        assertNotNull(lastUser);
+        assertEquals(5, lastUser.getId());
     }
 }
