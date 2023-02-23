@@ -1,5 +1,6 @@
 package com.tyatsura.spring.integration.database.repository;
 
+import com.tyatsura.spring.database.entity.User;
 import com.tyatsura.spring.database.repository.UserRepository;
 import com.tyatsura.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,21 @@ class UserRepositoryTest {
         var users = userRepository.findAllByUsername("ivan@gmail.com");
         assertEquals(1, users.size());
         log.info("Users: {}", users);
+    }
+
+    @Test
+    void updateRole() {
+        var ivanUser = userRepository.getReferenceById(1L);
+        assertEquals(User.Role.ADMIN, ivanUser.getRole());
+
+        var resultCount = userRepository.updateRole(User.Role.USER, 1L, 5L);
+        assertEquals(2, resultCount);
+
+        //LazyInitializationException will be here because PersistenceContext already cleared and there no any
+        // session attached to session
+        //ivanUser.getCompany().getName();
+
+        var theSameIvanUser = userRepository.getReferenceById(1L);
+        assertEquals(User.Role.USER, theSameIvanUser.getRole());
     }
 }

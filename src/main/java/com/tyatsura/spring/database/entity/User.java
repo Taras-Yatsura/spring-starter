@@ -38,7 +38,7 @@ public class User implements BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    private Company companyId;
+    private Company company;
 
     @Builder.Default
     @OneToMany(mappedBy = "user")
